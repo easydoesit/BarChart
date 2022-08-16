@@ -15,6 +15,7 @@
 }
 
 .yAxis{
+  text-align: right;
 }
 
 .tick{
@@ -72,5 +73,7 @@ border-style: dashed;
 }
 
 .tickbox span{
+  margin-right: 4px;
+  text-align: right;
 
 }

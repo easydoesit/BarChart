@@ -13,7 +13,7 @@ const barChart = {
   data:[["Makkah Royal Clock Tower", 601],["Burj Khalifa", 828],["Shanghai Tower", 632],["Ping An Finance Center", 599],["Lotte World Tower",555.7],["One World Trade Center", 541.3],["Guangzhuo CTF Finance Center", 530], ["Tianjin CTF Finance Center", 530],["CITIC Tower", 528],["Taipei 101", 508]],//[x axis labels, y axis values] 
   dataUnit: "M",
   axis: "vert", //'vert' means the x axis and labels are on the bottom "horiz" means they are on the side
-  tickNum:100, //this approx number between each tick
+  tickNum:50, //this approx number between each tick
 }
 
 $(document).ready(function($){
@@ -34,12 +34,22 @@ $(document).ready(function($){
   let ticks = Math.floor(largest/barChart.tickNum) + 1;//find the total number of ticks based on what the user wants the difference to be add one for the top.
   let spacing = Math.floor((barChart.tickNum*ratio) - 12); //find the spacing between each tick
   //add the ticks to the side of the graph
-  $(".barGraphGrid").append('<div class="yAxis"></div>');
+  $(".barGraphGrid").append('<div class="yAxisVal"></div><div class="yAxis"></div>');
+  let width = 0;
     for (let i = ticks; i > 0; i--){
       if (i === ticks){
-        $(".yAxis").append('<div class="tickbox" style="margin-bottom: '+ spacing +'px;"><span style="font-family:'+ barChart.titleFont + '">' + barChart.tickNum * i + '</span><div class="tick"></div></div>');
+        $(".yAxisVal").append('<div class="tickbox" style="margin-bottom: '+ spacing +'px;"><span style="font-family:'+ barChart.titleFont + '">' + barChart.tickNum * i + '</span></div>');
+        $(".yAxis").append('<div class="tickbox" style="margin-bottom: '+ spacing +'px;"><div class="tick"></div></div>');
+        let tickValWidth = document.querySelector(".yAxisVal");
+        tickValWidth= tickValWidth.querySelector(".tickbox");
+        tickValWidth = tickValWidth.querySelector("span");
+        width = tickValWidth.offsetWidth;
+        //tickValWidth = tickValWidth.offsetWidth;
+        console.log(width);
+        $(tickValWidth).css("width", width); 
       } else {
-      $(".yAxis").append('<div class="tickbox" style="margin-bottom: '+ spacing +'px;"><span style="font-family:'+ barChart.titleFont + '">' + barChart.tickNum * i + '</span><div class="tick"></div></div>');
+        $(".yAxisVal").append('<div class="tickbox" style="margin-bottom: '+ spacing +'px;"><span style="font-family:'+ barChart.titleFont + '; width:'+ width +'px">' + barChart.tickNum * i + '</span></div>');
+      $(".yAxis").append('<div class="tickbox" style="margin-bottom: '+ spacing +'px;"><div class="tick"></div></div>');
       }
     }
 
