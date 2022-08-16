@@ -1,1 +1,76 @@
 @import "normalize.css";
+
+#barChart {
+}
+.graphTitle{
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin: 20px 20px 40px 20px;
+
+}
+.barGraphGrid {
+  display: flex;
+  margin: 12px;
+}
+
+.yAxis{
+}
+
+.tick{
+  height: 2px;
+  width: 6px;
+  margin-top: 5px;
+  background-color: black;
+}
+.barGraphBar{
+  flex: 1;
+  display: flex;
+  font-family: arial;
+  font-size: 12px;
+  align-self: end;
+  justify-content:center
+}
+.barGraphBar span {
+  text-align: center;
+}
+
+
+.barGraphTitle {
+margin: 12px;
+text-align: center;
+border-width: 1px;
+border-color: black;
+border-style: dashed;
+}
+
+.barGraphVertX{
+  width: 20%;
+  border-width: 1px;
+  border-color: black;
+  border-style: dashed;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-child {
+  flex: 1;
+  border: 2px solid yellow;
+  color: blueviolet;
+}  
+
+.flex-child:first-child {
+  margin-right: 20px;
+} 
+.tickbox{
+  display: flex;
+  border-width: 1px;
+  font-size: 12px;
+  height: 12px;
+}
+
+.tickbox span{
+
+}
