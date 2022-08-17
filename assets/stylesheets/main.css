@@ -31,15 +31,28 @@
   background-color: black
 }
 
-.barGraphBar{
+.barGraphContainer {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  align-self: flex-end;
+  align-content: flex-end;
+  justify-content:center
+}
+
+.barGraphBar {
   display: flex;
   font-family: arial;
   font-size: 12px;
   align-self: end;
-  justify-content:center
+  align-content: center;
+  justify-content:center;
+  width:100%;
 }
+
 .barGraphBar span {
+  display: flex;
+  align-self: center;
   text-align: center
 }
 
