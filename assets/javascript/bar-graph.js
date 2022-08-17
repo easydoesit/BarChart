@@ -21,15 +21,24 @@ let drawBarChart = function (data, options, element) {
 
   $(document).ready(function($){
     const id = barChart.id;
+    console.log(barChart.id);
     const idcanvas = barChart.id + ".barGraphCanvas"
-    console.log(idcanvas);
+    let largest = 0;
     //get the largest measurement in the graph
-    let largest = barChart.data[0][1];
-    for (let i = 0; i < barChart.data.length;i++){
-      if (barChart.data[i][1] > largest){
-        largest = barChart.data[i][1];
+    for (let i = 1; i < barChart.data[0].length; i++){
+    largest = largest + barChart.data[0][i];
+    }
+
+    for (let i = 0; i < barChart.data.length; i++){
+      let compareTo = 0;
+      for (let j = 1; j < barChart.data[i].length; j++){
+        compareTo =  compareTo + barChart.data[i][j];
+      }
+      if (compareTo > largest){
+        largest = compareTo;
       }
     }
+    console.log(largest + " -  largest" )
     // add the title to the graph
     if (barChart.titleShow === 1){
       $(barChart.id).append('<div class ="graphTitle" style="color:#' + barChart.titleFontColor + '; font-family:'+ barChart.titleFont + '">'+ barChart.title + '</div>');
@@ -51,8 +60,6 @@ let drawBarChart = function (data, options, element) {
           tickValWidth = tickValWidth.querySelector(".tickbox");
           tickValWidth = tickValWidth.querySelector("span");
           width = tickValWidth.offsetWidth;
-          //tickValWidth = tickValWidth.offsetWidth;
-          console.log(width);
           $(tickValWidth).css("width", width); 
           $(barChart.id).children(".barGraphCanvas").children(".yAxisVal").css("width", width);
         } else {
@@ -63,10 +70,19 @@ let drawBarChart = function (data, options, element) {
       $(barChart.id).append('<div class="xAxisVal" style="margin-left: ' + (width +6) + 'px"></div>');  
   
     if (barChart.type = "simple"){
-      for (let i = 0; i < barChart.data.length;i++){
-        let barHeight = Math.round((barChart.data[i][1]/largest)*barChart.height);
-        $(barChart.id).children(".barGraphCanvas").children(".barGraphGrid").append('<div class="barGraphBar" style="height: ' + barHeight + 'px; align-items: '+ barChart.barUnitPlacement + '; background-color: #'+ barChart.barColor +'; margin:0px '+ barChart.barSpacing/2 + 'px"><span style="color: '+ barChart.barLabelColor +'">' + barChart.data[i][1] + ' ' + barChart.dataUnit + '</span></div>' );
+      for (let i = 0; i < barChart.data.length; i++){
         $(barChart.id).children(".xAxisVal").append('<div class="xValueBar" style="margin:0px '+ barChart.barSpacing/2 + 'px">' + barChart.data[i][0] + '</div>');
+        
+        let barHeightData=0;
+        let barHeight=0;
+        for (let j = 1; j < barChart.data[i].length; j++){
+          barHeightData = barHeightData + barChart.data[i][j];
+          console.log(barHeightData + "_" + j);
+        }
+        console.log(barHeightData);
+        barHeight = Math.round((barHeightData/largest) * barChart.height);
+        console.log(barHeight);
+        $(barChart.id).children(".barGraphCanvas").children(".barGraphGrid").append('<div class="barGraphBar" style="height: ' + barHeight + 'px; align-items: '+ barChart.barUnitPlacement + '; background-color: #'+ barChart.barColor +'; margin:0px '+ barChart.barSpacing/2 + 'px"><span style="color: '+ barChart.barLabelColor +'">' + barHeightData + ' ' + barChart.dataUnit + '</span></div>' );
       }
     }
   });
@@ -81,7 +97,7 @@ const barChart1Data = {
 
 const barChart1Options = {
   type: "simple", // can be "simple" or "stacked"
-  height: 500,// the height of the graph
+  height: 828,// the height of the graph
   title: "10 Tallest Buildings", //name between quotes
   titleShow: 1, //1 for true 0 for false;
   titleFont:"arial", //must install webfonts in the header to use others
@@ -98,14 +114,14 @@ let element1 = "#barChart1";
 drawBarChart(barChart1Data, barChart1Options, element1);
 
 const barChart2Data = {
-  data:[["Makkah Royal Clock Tower", 601],["Burj Khalifa", 828],["Shanghai Tower", 632],["Ping An Finance Center", 599],["Lotte World Tower",555.7],["One World Trade Center", 541.3],["Guangzhuo CTF Finance Center", 530], ["Tianjin CTF Finance Center", 530],["CITIC Tower", 528],["Taipei 101", 508]],//[x axis labels, y axis values] 
+  data:[["bar1" , 2 , 3 , 4], ["bar2", 1, 7, 8]], //[x axis labels, y axis values] or [[x axis labels, y axis values],[x axis labels, y axis values]] 
   dataUnit: "Meters",
 }
 
 
 const barChart2Options = {
   type: "simple", // can be "simple" or "stacked"
-  height: 500,// the height of the graph
+  height: 160,// the height of the graph
   title: "10 Tallest Buildings", //name between quotes
   titleShow: 1, //1 for true 0 for false;
   titleFont:"arial", //must install webfonts in the header to use others
@@ -115,7 +131,7 @@ const barChart2Options = {
   barSpacing: 6,//spaces between bars - bar width will change dynamically based on this value.
   barUnitPlacement: "end", //options are 'start', 'center' or 'end'
   axis: "vert", //'vert' means the labels are on the bottom "horiz" means they are on the side
-  tickNum:50, //this approx number between each tick
+  tickNum:2, //this approx number between each tick
 }
 let element2 = "#barChart2";
 
