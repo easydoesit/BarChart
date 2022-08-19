@@ -1,99 +1,148 @@
 @import "normalize.css";
 
 
-.graphTitle {
-  display: flex;
-  justify-content: center;
+.barChartContainerVert {
+
+}
+
+.barChartTitle {
   font-size: 20px;
-  margin: 20px 20px 40px 20px
+  text-align: center;
+  margin-bottom: 20px;
+  height: 23px;
 }
-
-.barGraphGrid {
+.graphContainer{
   display: flex;
-  border-left: 1px black solid;
-  border-bottom: 1px black solid;
-  flex-grow: 1
+  background-color: #bbb;
 }
 
-.barGraphCanvas {
-  display: flex
-
-}
-
-.yAxis {
-  text-align: right
-}
-
-.tick {
-  height: 2px;
-  width: 6px;
-  margin-top: 5px;
-  background-color: black
-}
-
-.barGraphContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-self: flex-end;
-  align-content: flex-end;
-  justify-content:center
-}
-
-.barGraphBar {
-  display: flex;
-  font-family: arial;
+.yAxisValueContainerVert {
+  height: 100%;
   font-size: 12px;
+}
+
+.yAxisValueContainerHor {
+  height: 6px;
+}
+
+.yAxisValue {
+  text-align:right;
+  height:12px;
+}
+
+.yAxisValueHor {
+  font-size: 12px;
+  text-align:right;
+  vertical-align: middle;
+}
+
+.yAxisValueHor span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  margin-right: 2px;
+}
+
+.yAxisTicksContainerVert {
+  height: 100%;
+}
+
+.xAxisTicksContainerHor {
+  height: 6px;
+}
+
+.tickBoxVert {
+  height: 12px; 
+}
+
+.tickBoxHor {
+  margin-bottom: 10px; 
+  background-color: #999;
+}
+
+.ticksVert {
+  display:inline-block;
+  height:2px; 
+  width:6px;
+  background-color: #000; 
+  margin-bottom:6px;
+}
+
+.ticksHor {
+  float: left;
+  height:6px; 
+  width:2px;
+  background-color: #000; 
+}
+
+.barGraphVert {
+  display: flex;
+  border-left:2px #000 solid;
+}
+
+.barGraphHor {
+  border-left:2px #000 solid;
+  border-bottom:2px #000 solid 
+}
+
+.barContainerVert{
+  flex: 1;
+  justify-content: center;
   align-self: end;
-  align-content: center;
-  justify-content:center;
+  position: relative
+}
+
+.barContainerHor {
+  background-color:#777;
+  position: relative
+}
+
+.barStackVert {
+  align-self: end;
   width:100%;
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
 }
 
-.barGraphBar span {
+.barStackHor {
+  height: 100%;
+  float: left;
+}
+
+.barStackVert span, .barStackHor span {
+font-size: 12px;
+}
+
+.barStackVert span {
+  display: inline-block;
+  line-height: normal;
+}
+
+.xAxisValueContainerVert {
   display: flex;
-  align-self: center;
-  text-align: center
+  height: 12px;
+  margin-top: 2px;
+}
+.xAxisValueContainerHor {
+  margin-top: 2px;
 }
 
-
-.barGraphTitle {
-margin: 12px;
-text-align: center;
-border-width: 1px;
-border-color: black;
-border-style: dashed;
-}
-
-.barGraphVertX {
-  width: 20%;
-  border-width: 1px;
-  border-color: black;
-  border-style: dashed
-}
-
-.tickbox {
-  display: flex;
+.xValueVert {
+  flex:1;
+  text-align: center;
+  width: 100%;
+  height: 12px;
   font-size: 12px;
-  height: 12px
+  overflow: hidden;
 }
 
-.tickbox span {
-  margin-right: 4px;
-  text-align: right;
-
+.xValueHor {
+  float: left;
 }
 
-.xAxisVal {
-  display: flex;
-  margin-top: 5px;
-}
+.bottomBorder {
+  height: 2px;
+  background-color: #000;
 
-.xValueBar {
-  flex: 1;
-  display: flex;
-  font-family: arial;
-  font-size: 12px;
-  align-self: start;
-  justify-content:center
 }
