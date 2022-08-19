@@ -8,7 +8,6 @@
 }
 .graphContainer{
   display: flex;
-  background-color: #bbb;
 }
 
 .yAxisValueContainerVert {
@@ -17,8 +16,8 @@
 }
 
 .yAxisValueContainerHor {
-  height: 6px;
-  background-color: #ccc;
+  display: flex;
+  flex-direction: column;
 }
 
 .yAxisValue {
@@ -27,11 +26,10 @@
 }
 
 .yAxisValueHor {
+  flex: 1;
   font-size: 12px;
   text-align:right;
   vertical-align: middle;
-  background-color: #777;
-  max-width: 100px;
 }
 
 .yAxisValueHor span {
@@ -56,14 +54,12 @@
 
 .tickBoxHor {
   margin-bottom: 10px; 
-  background-color: #999;
 }
 
 .ticksVert {
   display:inline-block;
   height:2px; 
   width:6px;
-  background-color: #000; 
   margin-bottom:6px;
 }
 
@@ -80,8 +76,9 @@
 }
 
 .barGraphHor {
+  display: flex;
+  flex-direction: column;
   border-left:2px #000 solid;
-  border-bottom:2px #000 solid 
 }
 
 .barContainerVert{
@@ -92,8 +89,8 @@
 }
 
 .barContainerHor {
-  background-color:#777;
-  position: relative
+  position: relative;
+  flex: 1;
 }
 
 .barStackVert {
@@ -111,12 +108,15 @@
 
 .barStackVert span, .barStackHor span {
 font-size: 12px;
+display: inline-block;
+line-height: normal;
 }
 
-.barStackVert span {
-  display: inline-block;
-  line-height: normal;
+.barStackHor span {
+  vertical-align: middle;
 }
+
+
 
 .xAxisValueContainerVert {
   display: flex;
@@ -125,6 +125,7 @@ font-size: 12px;
 }
 .xAxisValueContainerHor {
   margin-top: 2px;
+  height: 14px;
 }
 
 .xValueVert {
@@ -138,10 +139,24 @@ font-size: 12px;
 
 .xValueHor {
   float: left;
+  position: relative;
+  font-size: 12px;
+  height: 12px;
+  text-align: center;
+}
+.xValueHor span{
+position: absolute;
 }
 
 .bottomBorder {
   height: 2px;
   background-color: #000;
 
+}
+
+.bottomLabel {
+  height: 18px;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 8px;
 }

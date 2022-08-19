@@ -48,10 +48,11 @@ let drawBarChart = function (data, options, element) {
       ratio = (barChart.height - 36)/largest ; 
     }
     //have the ratio just be 2 decimal places
-    ratio = ratio.toFixed(2);
+  } else if (barChart.axis === 'horiz'){
+    ratio = (barChart.width - 82)/largest;
   }
-  //console.log(ratio + "- ratio");
 
+  ratio = ratio.toFixed(2);
   $(document).ready(function($){
     $(barChart.id).css({ 'margin' : '50px'});
     $(barChart.id).css({'display' : 'inline-block' });
@@ -65,7 +66,6 @@ let drawBarChart = function (data, options, element) {
     
         //add in the container to hold all the graph info. It fits the remainder of the chart minus the buttom row. 59 is how much  height all the other items that aren't the graph take up.
         let graphHeight = (barChart.height - 59);
-        console.log(graphHeight + " -  graph Height");
         $(barChart.id).children('.barChartContainerVert').append('<div class="graphContainer" style="height:' + graphHeight + 'px; width:' + barChart.width + 'px;"></div>');
     
         //add where the ticks and the measurements will go.
@@ -79,10 +79,10 @@ let drawBarChart = function (data, options, element) {
 
         //find the total number of ticks based on what the user wants the space between them in units to be and add one for the top.
         let ticks = Math.floor(largest/barChart.tickNum);
-        console.log(ticks + " ticks");
+        
         //find the spacing between each tick 12 is the height of the label and tick
         let spacing = Math.floor((barChart.tickNum*ratio) - 12);
-        console.log(spacing + "- Spacing ")
+
         let topMargin = graphHeight - ((spacing + 12) * ticks);
         //Loop through the total number of ticks and put them in.
         for (let i = ticks; i > 0; i--){
@@ -95,7 +95,7 @@ let drawBarChart = function (data, options, element) {
             //this is wehere we find the width of the value
             let tickValWidth = document.querySelector(barChart.id).querySelector(".barChartContainerVert").querySelector(".graphContainer").querySelector(".yAxisValueContainerVert").querySelector(".yAxisValue").querySelector("span");
             YAxisWidth = tickValWidth.offsetWidth;
-            console.log(YAxisWidth + " - Yaxis Width");
+
             //now we change the width so we can justify the text to the right of the div
             $(tickValWidth).css("width", YAxisWidth); 
             
@@ -124,16 +124,14 @@ let drawBarChart = function (data, options, element) {
         let barHeightData=0;
         //barHeight is the height we want to display based on the height of the graph chosen by the user.
         let barHeight=0;
-        //calculate the actual bar height this needs to be changed
+        //calculate the actual bar height
         for (let j = 1; j < barChart.data[i].length; j++){
           barHeightData = barHeightData + barChart.data[i][j];
           console.log(barHeightData + "- BarheightData" + j);
         }
 
-        console.log(barHeightData);
         //get the final barHeight
         barHeight = Math.floor((barHeightData/largest * graphHeight));
-        console.log(barHeight + "- BarHeight Calculated");
         let barSpacing = barChart.barSpacing/2;
         //add each bar container to the graph.
         $(barChart.id).children(".barChartContainerVert").children(".graphContainer").children(".barGraphVert").append('<div class ="barContainerVert" style="height: ' + barHeight + 'px; margin: 0px '+ barSpacing +'px 0px '+ barSpacing +'px;"></div>');
@@ -154,13 +152,14 @@ let drawBarChart = function (data, options, element) {
         let barStackMargin = 0;
         for (let j = barChart.data[index].length -1; j >= 1; j--){
           barStack = Math.floor((barChart.data[index][j]/largest * graphHeight));
-          console.log(barStack + "BS size");
           $(this).append('<div class="barStackVert" valign="bottom" style="margin-bottom:'+ barStackMargin +'px; height: ' + barStack + 'px; line-height: ' + barStack + 'px; background-color:#' + barChart.barColor[j-1] + '; font-family: '+ barChart.titleFont +';"><span style="color: '+ barChart.barLabelColor +'; vertical-align: ' + vertPlacement + ';">' + barChart.data[index][j] + ' ' + barChart.dataUnit + '</span></div>');
           barStackMargin = barStackMargin + barStack;
         }
       });
     }
-
+    //
+    //
+    // if the barchart is horizontal
     if (barChart.axis === 'horiz'){
       $(barChart.id).append('<div class = "barChartContainerHor" style="height:' + barChart.height + 'px; width:' + barChart.width + 'px;"></div>');
 
@@ -171,29 +170,100 @@ let drawBarChart = function (data, options, element) {
       //add in the container to hold all the graph info. It fits the remainder of the chart minus the buttom row. 59 is how much  height all the other items that aren't the graph take up.
       let graphHeight = 0;
       if (barChart.title === 1){
-        graphHeight = (barChart.height - 59); 
+        graphHeight = (barChart.height - 83); 
       } else {
-        graphHeight = (barChart.height - 36); 
+        graphHeight = (barChart.height - 40); 
       }
       
       console.log(graphHeight + " -  graph Height");
       
+      //make a variable to hold the width of the values. 
+      console.log(graphHeight + " divide grapheight by barchart data lenght " + barChart.data.length );
+      console.log(barChart.barSpacing/2 + "multiply spacing by barchart data length" + barChart.data.length);
+      let valueHeight = Math.floor((graphHeight/barChart.data.length)-((barChart.barSpacing)));
+      console.log(valueHeight + " - Value Height")
       
-      $(barChart.id).children('.barChartContainerHor').append('<div class="graphContainer" style="height:' + graphHeight + 'px; width:' + barChart.width + 'px;"></div>');
+      $(barChart.id).children('.barChartContainerHor').append('<div class="graphContainer" style="width:' + barChart.width + 'px;"></div>');
 
       //add where the values will go.
       let YAxisWidth = 80;
+      let graphWidth = barChart.width-YAxisWidth;
       $(barChart.id).children(".barChartContainerHor").children(".graphContainer").append('<div class = "yAxisValueContainerHor" style="margin-top:0px; height:'+ graphHeight +'px"></div>');
-      $(barChart.id).children(".barChartContainerHor").children(".graphContainer").append('<div class = "barGraphHor" style="width:' + (barChart.width-YAxisWidth) +'px"></div>');
+      $(barChart.id).children(".barChartContainerHor").children(".graphContainer").append('<div class = "barGraphHor" style="width:' + graphWidth +'px; height: ' + graphHeight + 'px;"></div>');
       
-      //make a variable to hold the width of the values. This comes after the first and widest value is placed.
-      let valueHeight = Math.floor(graphHeight/barChart.data.length);
-      console.log(valueHeight + " - Value Height")
-      for (let i = 0; i < barChart.data.length; i++){
-        $(barChart.id).children(".barChartContainerHor").children(".graphContainer").children(".yAxisValueContainerHor").append('<div class = "yAxisValueHor" style="font-family:' + barChart.titleFont + '; height: ' + valueHeight + 'px; line-height: ' + valueHeight + 'px; "><span style="width:' + YAxisWidth + 'px">' + barChart.data[i][0] + '</span></div>');
-      }
-      console.log(YAxisWidth + " - Yaxis Width");
+      //place a border at the bottom
+      $(barChart.id).children(".barChartContainerHor").append('<div class="bottomBorder" style="width:'+ (graphWidth - 6) +'p; margin-left:' + (YAxisWidth+2) +'px"></div>');
+      //add bar to hold ticks
+      $(barChart.id).children(".barChartContainerHor").append('<div class = "xAxisContainerHor" style="margin-left:'+ (YAxisWidth+3) + 'px;"><div class="xAxisTicksContainerHor"></div><div class = "xAxisValueContainerHor" ></div>');
 
+      //barWidth is the width we want to display based on the width of the graph chosen by the user.
+      let barWidth=0;
+      //add the values and the bars.
+      for (let i = 0; i < barChart.data.length; i++){
+        $(barChart.id).children(".barChartContainerHor").children(".graphContainer").children(".yAxisValueContainerHor").append('<div class = "yAxisValueHor" style="font-family:' + barChart.titleFont + '; height: ' + valueHeight + 'px; line-height: ' + valueHeight + 'px; margin: '+ (barChart.barSpacing/2)+'px 0px;"><span style="width:' + YAxisWidth + 'px">' + barChart.data[i][0] + '</span></div>');
+
+        //bar WidthData the actual bar width.
+        let barWidthData=0;
+        //calculate the actual bar height
+        for (let j = 1; j < barChart.data[i].length; j++){
+          barWidthData = barWidthData + barChart.data[i][j];
+          console.log(barWidthData + " - BarWidthData" + j);
+        }
+
+        console.log(barWidthData);
+        //get the final barHeight
+        barWidth = Math.floor((barWidthData/largest * graphWidth));
+        console.log(barWidth + "- BarWidth Calculated");
+        let barSpacing = barChart.barSpacing/2;
+        //add each bar container to the graph.
+        $(barChart.id).children(".barChartContainerHor").children(".graphContainer").children(".barGraphHor").append('<div class ="barContainerHor" style="height:'+ valueHeight +'px; line-height: ' + valueHeight + 'px; width:'+ barWidth +'px; margin: '+ barSpacing +'px 0px;"></div>');
+      }
+        
+      let horPlacement = "center";
+        if (barChart.barUnitPlacement === "start"){
+          horPlacement = "left";
+        }
+        if (barChart.barUnitPlacement === "end"){
+          horPlacement = "right";
+        }
+
+       //add each barstack to the bar container
+       let barStack = 0;
+       $(barChart.id).children(".barChartContainerHor").children(".graphContainer").children(".barGraphHor").children(".barContainerHor").each(function( index ) {
+         
+
+        for (let j = barChart.data[index].length -1; j >= 1; j--){
+          barStack = Math.floor((barChart.data[index][j]/largest * (graphWidth-4)));
+          console.log(barStack + "- BS Width");
+          $(this).append('<div class="barStackHor" style="width: ' + barStack + 'px; background-color:#' + barChart.barColor[j-1] + '; font-family: '+ barChart.titleFont +'; text-align:'+ horPlacement +' "><span style="color: '+ barChart.barLabelColor +';">' + barChart.data[index][j] + ' ' + barChart.dataUnit + '</span></div>');
+        
+        }
+
+       });
+
+       //find the total number of ticks based on what the user wants the space between them in units to be and add one for the top.
+       let ticks = Math.floor(largest/barChart.tickNum);
+
+       //find the spacing between each tick 2 is the Width of tick
+       let spacing = Math.floor(barChart.tickNum*ratio);
+
+       //Loop through the total number of ticks and put them in.
+       let XAxisWidth = 0;
+       for (let i = 1; i < ticks + 1; i++){
+           //place the values in each box along with the corresponding tick
+           $(barChart.id).children(".barChartContainerHor").children(".xAxisContainerHor").children(".xAxisTicksContainerHor").append('<div class="ticksHor"style="margin-left: '+ (spacing-2) +'px"></div>');
+           $(barChart.id).children(".barChartContainerHor").children(".xAxisContainerHor").children(".xAxisValueContainerHor").append('<div class="xValueHor" style="font-family: ' + barChart.titleFont+ '; width:'+ XAxisWidth+'px; margin-left: '+ (spacing) +'px"><span>'+ (barChart.tickNum * i) + '</span></div>');
+  
+        }  
+  
+        $(barChart.id).children(".barChartContainerHor").children(".xAxisContainerHor").children(".xAxisValueContainerHor").children(".xValueHor").children("span").each(function( index ) {
+          let ele = document.querySelector(barChart.id).querySelector(".xAxisContainerHor").querySelector('.xAxisValueContainerHor :nth-child('+ (index + 1)+')');
+          ele = ele.querySelector("span");
+          spanWidth = ele.offsetWidth;
+          $( this ).css({'left' : -(spanWidth/2) })
+        });
+
+        $(barChart.id).children('.barChartContainerHor').children(".xAxisContainerHor").append('<div class ="bottomLabel" style="font-family:'+ barChart.titleFont + ';">'+ barChart.dataUnit + '</div>');
 
     }
 
@@ -219,38 +289,7 @@ let drawBarChart = function (data, options, element) {
         $(barChart.id).children(".barGraphCanvas").children(".barGraphGrid").append('<div class="barGraphContainer" style="width: ' + barHeight + 'px; height: '+ height+'px; background-color:#ddd; margin:'+ barChart.barSpacing/2 + 'px 0px"></div>' ); 
         let makeColumn = $(barChart.id).children(".barGraphCanvas").children(".barGraphGrid");
         makeColumn.css({"flex-direction": "column"});
-        makeColumn.css({"align-items": "flex-start"});
-
-
-        else if (barChart.axis === 'horiz') {
-              let horizPlace = "center";
-              if (barChart.barUnitPlacement === "start"){
-                horizPlace = "left";
-              }
-              if (barChart.barUnitPlacement === "end"){
-                horizPlace = "right";
-              }        
-              $( this ).append('<div class="barGraphBar" style="align-self:start; height: 100%; width:'+ barStack +'px; background-color: #'+ barChart.barColor[j-1] +';"><span width="100%" style="color: '+ barChart.barLabelColor +';   align-self:center; text-align:'+horizPlace +'; width:'+ barStack +'px">' + barChart.data[index][j] + ' ' + barChart.dataUnit + '</span></div>' );
-            }
-
-      }
-
-
-
-
-
-    if (barChart.axis === 'horiz'){
-      $(barChart.id).append('<div class = "barChartContainerHor" style="height:' + barChart.height + 'px; width:' + barChart.width + 'px; background-color:#"></div>');
-      $(barChart.id).children('.barChartContainerHor').append('<div class="GraphContainer" style="height:' + barChart.height + 'px; width:' + barChart.width + 'px;"></div>');
-    // add the title to the graph
-      if (barChart.titleShow === 1){
-        $(barChart.id).children('.barChartContainerHor').append('<div class ="barChartTitle" style="color:#' + barChart.titleFontColor + '; font-family:'+ barChart.titleFont + ';">'+ barChart.title + '</div>');
-      }
-
-      //add in the container to hold all the graph info. It fits the remainder of the chart. Minsu the bottom row.
-      let graphHeight = barChart.height - 63;
-      $(barChart.id).children('.barChartContainerHor').append('<div class="GraphContainer" style="height:' + graphHeight + 'px; width:' + barChart.width + 'px;"></div>');
-  }*/
+        makeColumn.css({"align-items": "flex-start"});*/
 
 const barChart1Data = {
   data:[["Makkah Royal Clock Tower", 601],["Burj Khalifa", 828],["Shanghai Tower", 632],["Ping An Finance Center", 599],["Lotte World Tower",555.7],["One World Trade Center", 541.3],["Guangzhuo CTF Finance Center", 530], ["Tianjin CTF Finance Center", 530],["CITIC Tower", 528],["Taipei 101", 508]],//[x axis labels, y axis values] 
@@ -314,7 +353,7 @@ const barChart3Options = {
   barColor: ["AA0606"], //hex value for stacked charts seperate colors with commas
   barLabelColor: "yellow", //hexvalue
   barSpacing: 6,//spaces between bars - bar width will change dynamically based on this value.
-  barUnitPlacement: "start", //options are 'start', 'center' or 'end'
+  barUnitPlacement: "end", //options are 'start', 'center' or 'end'
   axis: "horiz", //'vert' means the labels are on the bottom "horiz" means they are on the side
   tickNum:100, //this approx number between each tick
 }
@@ -330,7 +369,7 @@ const barChart4Data = {
 const barChart4Options = {
   width: 500, // the width of the graph
   height: 500,// the height of the graph
-  title: "2 fuken bar 2", //name between quotes
+  title: "2 bars horizontal", //name between quotes
   titleShow: 1, //1 for true 0 for false;
   titleFont:"arial", //must install webfonts in the header to use others
   titleFontColor: "AA0606", //hex value
