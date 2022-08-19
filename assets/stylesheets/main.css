@@ -1,10 +1,5 @@
 @import "normalize.css";
 
-
-.barChartContainerVert {
-
-}
-
 .barChartTitle {
   font-size: 20px;
   text-align: center;
@@ -23,6 +18,7 @@
 
 .yAxisValueContainerHor {
   height: 6px;
+  background-color: #ccc;
 }
 
 .yAxisValue {
@@ -34,6 +30,8 @@
   font-size: 12px;
   text-align:right;
   vertical-align: middle;
+  background-color: #777;
+  max-width: 100px;
 }
 
 .yAxisValueHor span {
@@ -41,6 +39,7 @@
   vertical-align: middle;
   line-height: normal;
   margin-right: 2px;
+  max-width: 100px;
 }
 
 .yAxisTicksContainerVert {

@@ -42,14 +42,15 @@ let drawBarChart = function (data, options, element) {
   //vertical graph
   let ratio = 0;
   if (barChart.axis === 'vert'){
-  ratio = (barChart.height - 59)/largest ; 
-  //or horizontal graph
+    if (barChart.title === 1){
+      ratio = (barChart.height - 59)/largest ; 
+    } else {
+      ratio = (barChart.height - 36)/largest ; 
+    }
+    //have the ratio just be 2 decimal places
+    ratio = ratio.toFixed(2);
   }
-  //have the ratio just be 2 decimal places
-  ratio = ratio.toFixed(2);
   //console.log(ratio + "- ratio");
-
-
 
   $(document).ready(function($){
     $(barChart.id).css({ 'margin' : '50px'});
@@ -92,8 +93,7 @@ let drawBarChart = function (data, options, element) {
             
             
             //this is wehere we find the width of the value
-            let tickValWidth = document.querySelector(barChart.id);
-            tickValWidth = tickValWidth.querySelector(".barChartContainerVert").querySelector(".graphContainer").querySelector(".yAxisValueContainerVert").querySelector(".yAxisValue").querySelector("span");
+            let tickValWidth = document.querySelector(barChart.id).querySelector(".barChartContainerVert").querySelector(".graphContainer").querySelector(".yAxisValueContainerVert").querySelector(".yAxisValue").querySelector("span");
             YAxisWidth = tickValWidth.offsetWidth;
             console.log(YAxisWidth + " - Yaxis Width");
             //now we change the width so we can justify the text to the right of the div
@@ -160,9 +160,45 @@ let drawBarChart = function (data, options, element) {
         }
       });
     }
+
+    if (barChart.axis === 'horiz'){
+      $(barChart.id).append('<div class = "barChartContainerHor" style="height:' + barChart.height + 'px; width:' + barChart.width + 'px;"></div>');
+
+      // add the title to the graph
+      if (barChart.titleShow === 1){
+        $(barChart.id).children('.barChartContainerHor').append('<div class ="barChartTitle" style="color:#' + barChart.titleFontColor + '; font-family:'+ barChart.titleFont + ';">'+ barChart.title + '</div>');
+      }
+      //add in the container to hold all the graph info. It fits the remainder of the chart minus the buttom row. 59 is how much  height all the other items that aren't the graph take up.
+      let graphHeight = 0;
+      if (barChart.title === 1){
+        graphHeight = (barChart.height - 59); 
+      } else {
+        graphHeight = (barChart.height - 36); 
+      }
+      
+      console.log(graphHeight + " -  graph Height");
+      
+      
+      $(barChart.id).children('.barChartContainerHor').append('<div class="graphContainer" style="height:' + graphHeight + 'px; width:' + barChart.width + 'px;"></div>');
+
+      //add where the values will go.
+      let YAxisWidth = 80;
+      $(barChart.id).children(".barChartContainerHor").children(".graphContainer").append('<div class = "yAxisValueContainerHor" style="margin-top:0px; height:'+ graphHeight +'px"></div>');
+      $(barChart.id).children(".barChartContainerHor").children(".graphContainer").append('<div class = "barGraphHor" style="width:' + (barChart.width-YAxisWidth) +'px"></div>');
+      
+      //make a variable to hold the width of the values. This comes after the first and widest value is placed.
+      let valueHeight = Math.floor(graphHeight/barChart.data.length);
+      console.log(valueHeight + " - Value Height")
+      for (let i = 0; i < barChart.data.length; i++){
+        $(barChart.id).children(".barChartContainerHor").children(".graphContainer").children(".yAxisValueContainerHor").append('<div class = "yAxisValueHor" style="font-family:' + barChart.titleFont + '; height: ' + valueHeight + 'px; line-height: ' + valueHeight + 'px; "><span style="width:' + YAxisWidth + 'px">' + barChart.data[i][0] + '</span></div>');
+      }
+      console.log(YAxisWidth + " - Yaxis Width");
+
+
+    }
+
   });
 }
-
 
 
 
@@ -226,7 +262,7 @@ const barChart1Options = {
   width: 800, // the width of the graph
   height: 600,// the height of the graph
   title: "10 Tallest Buildings", //name between quotes
-  titleShow: 1, //1 for true 0 for false;
+  titleShow: 0, //1 for true 0 for false;
   titleFont:"arial", //must install webfonts in the header to use others
   titleFontColor: "AA0606", //hex value
   barColor: ["AA0606"], //hex value for stacked charts seperate colors with commas
