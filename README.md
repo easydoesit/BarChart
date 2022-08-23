@@ -19,7 +19,9 @@ The graph scales to the size of the chart, so bars represent the actual numbers.
 - Single or Stacked Bars
 - Data aligns Horizontally or Vertically
 
+### Screenshots
 
+![Screenshot 1](https://github.com/easydoesit/BarChart/blob/main/about/BarChartHorizontal%2001.png)
 Example Screenshots (embedded within the readme as image tags)
 
 List the API functions that you would expect a user to use
