@@ -22,7 +22,13 @@ The graph scales to the size of the chart, so bars represent the actual numbers.
 ### Screenshots
 
 ![Screenshot 1](https://github.com/easydoesit/BarChart/blob/main/about/BarChartHorizontal%2001.png)
-Example Screenshots (embedded within the readme as image tags)
+
+![Screenshot 2](https://github.com/easydoesit/BarChart/blob/main/about/BarChartHorizontal%2002.png)
+
+![Screenshot 3](https://github.com/easydoesit/BarChart/blob/main/about/BarChartVertical%2001.png)
+
+![Screenshot 4](https://github.com/easydoesit/BarChart/blob/main/about/BarChartVertical%2002.png)
+
 
 List the API functions that you would expect a user to use
 
