@@ -58,7 +58,7 @@ element
 
 ### Known issues / bugs
 
-- Bar lenths and widths are a bit off, by about 3 pixels. Not noticable but needs to be fixed. Current hack is that I put -3 on the final lenght.
+- Bar lengths and widths are a bit off, by about 3 pixels. Not noticable but needs to be fixed. Current hack is that I put -3 on the final length.
 
 ### Roadmap
 
