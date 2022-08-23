@@ -1,6 +1,6 @@
 # Scalable BarCharts
 
-##About
+## About
 
 Give some context to what your project is for
 
