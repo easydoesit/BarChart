@@ -2,7 +2,23 @@
 
 ## About
 
-Give some context to what your project is for
+This project allows you to create simple, stacked bar charts in a horizontal or vertical orientation.
+
+You can choose the width and height of the entire chart. Those dimensions will include the chart axis, labels and the complete graph.
+
+The graph scales to the size of the chart, so bars represent the actual numbers.
+
+### Options for the User are:
+
+- Height Size
+- Width Size
+- Space between bars
+- Label placement
+- Label Colors
+- Title Font and Colors
+- Single or Stacked Bars
+- Data aligns Horizontally or Vertically
+
 
 Example Screenshots (embedded within the readme as image tags)
 
